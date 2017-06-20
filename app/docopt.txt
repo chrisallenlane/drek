@@ -1,0 +1,31 @@
+drek
+
+Locates user-specified strings within a codebase.
+
+Usage:
+  drek [options] <source-directory>...
+
+Options:
+  -h --help               Show this screen.
+  --version               Show version.
+  -p --project=<name>     The project name [default: drek scan].
+  -b --lines-before=<n>   Number of context lines to show before [default: 5].
+  -a --lines-after=<n>    Number of context lines to show before [default: 5].
+  -s --signatures=<file>  File(s) containing search signatures (allows wildcards).
+  -i --ignore=<dir>       Directory/directories to ignore from search.
+  -f --format=<format>    The desired output format [default: html].
+
+Examples:
+  
+  To scan a directory and output an HTML report:
+    drek scan \
+      --project='My App' \
+      --signatures='/path/to/signatures/*.yml' \
+      ./my-app > drek-scan.html
+
+  To ignore code in node_modules:
+    drek scan \
+      --project='My App' \
+      --signatures='/path/to/signatures/*.yml' \
+      --ignore='node_modules' \
+      ./my-app > drek-scan.html

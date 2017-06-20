@@ -1,0 +1,57 @@
+{
+  "name": "drek",
+  "version": "0.0.1",
+  "description": "A static-code-analysis tool that can be used to perform security-focused code reviews. It enables an auditor to swiftly map the attack-surface of a large application, with an emphasis on identifying development anti-patterns and footguns.",
+  "homepage": "https://github.com/chrisallenlane/drek",
+  "author": {
+    "name": "Chris Allen Lane",
+    "email": "chris@chris-allen-lane.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "less": "lessc app/static/app.less app/static/app.css",
+    "lint": "jshint app test",
+    "test": "tape 'test/*.js' | faucet"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "expr": true,
+    "laxbreak": true
+  },
+  "dependencies": {
+    "docopt": "0.6.2",
+    "ejs": "^2.5.6",
+    "expand-tilde": "^2.0.2",
+    "glob": "^7.1.2",
+    "json2csv": "^3.7.3",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "node-prismjs": "^0.1.0",
+    "prismjs": "^1.6.0",
+    "rc": "^1.2.1",
+    "uuid-v4": "^0.1.0",
+    "xmlbuilder": "^9.0.1",
+    "yamljs": "^0.2.10"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "jshint": "2.9.4",
+    "less": "^2.7.2",
+    "tape": "^4.6.3"
+  },
+  "keywords": [
+    "security",
+    "static-code-analysis"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisallenlane/drek"
+  },
+  "bugs": {
+    "url": "https://github.com/chrisallenlane/drek/issues"
+  },
+  "bin": {
+    "drek": "app/index.js"
+  },
+  "main": "app/index.js"
+}

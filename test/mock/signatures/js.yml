@@ -1,0 +1,7 @@
+---
+filetypes:
+  - js
+
+patterns:
+  - \sconsole
+  - \seval\s*\(

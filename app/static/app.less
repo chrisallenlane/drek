@@ -1,0 +1,317 @@
+/* colors */
+@blue        : #4078c0;
+@blueLight   : #f2f8fa;
+@orange      : orange;
+@orangeLight : lightyellow;
+@red         : #bd2c00;
+@redLight    : #ffccbd;
+@gray        : #767676;
+@grayLight   : silver;
+
+
+
+
+/* highlighter helper function */
+.fn-highlight(@color) {
+  background-color: @color;
+  color: white;
+}
+
+
+/* hide the notification headers by default */
+header#no-matches,
+header#rendering {
+  display: none;
+}
+
+
+/* applied while vue.js is rendering */
+#app[v-cloak] {
+
+  /* hide sidebar and "matches" space */
+  aside, main {
+    display: none;
+  }
+
+  /* display a blankslate notification */
+  header#rendering {
+    display: block;
+  }
+}
+
+
+/* applied when no matches are found */
+#app.nomatches {
+
+  /* hide sidebar and "matches" space */
+  aside, main {
+    display: none;
+  }
+
+  /* display a blankslate notification */
+  header#no-matches {
+    display: block;
+  }
+}
+
+
+/* sidebar */
+aside li a[data-severity] {
+  color: silver;
+}
+
+/* sidebar severity filters */
+#app.showOk aside a[data-severity=ok] {
+  color: @blue;
+  &:hover {
+    .fn-highlight(@blue);
+  }
+}
+#app.showWarn aside a[data-severity=warn] {
+  color: @orange;
+  &:hover {
+    .fn-highlight(@orange);
+  }
+}
+#app.showCritical aside a[data-severity=critical] {
+  color: @red;
+  &:hover {
+    .fn-highlight(@red);
+  }
+}
+#app.showUnknown aside a[data-severity=unknown] {
+  color: @gray;
+  &:hover {
+    .fn-highlight(@gray);
+  }
+}
+
+
+/* matches */
+#app.showOk       div.match[data-severity=ok],
+#app.showWarn     div.match[data-severity=warn],
+#app.showCritical div.match[data-severity=critical],
+#app.showUnknown  div.match[data-severity=unknown] {
+  display: block;
+}
+
+
+#app main section {
+
+  &[data-show='false'] {
+    h2 {
+      color: silver;
+    }
+
+    div.match {
+      display: none !important; /* kludge */
+    }
+  }
+
+  a.show-hide {
+    cursor: pointer;
+    float: right;
+    font-size: small;
+    font-weight: normal;
+  }
+}
+
+div.match {
+  border-left: 1px solid white;
+  display: none;
+
+  &:hover{
+    border-left: 1px solid #e5e5e5;
+  }
+
+  /* apply background colors by severity */
+  &[data-severity=ok] {
+    background-color: @blueLight;
+
+    /* hide code samples and notes for "ok" severity matches */
+    code, textarea {
+      display: none;
+    }
+  }
+  &[data-severity=warn] {
+    background-color: @orangeLight;
+  }
+  &[data-severity=critical] {
+    background-color: @redLight;
+  }
+
+  span.match-id {
+    float: left;
+  }
+
+  /* heading */
+  h3 {
+    color: darkgray;
+    font-family: monospace;
+    font-size: small;
+    font-weight: normal;
+
+    span.line-number {
+      color: #55a532;
+      font-weight: bold;
+    }
+  }
+
+  /* code blocks */
+  code {
+    padding: 1rem;
+    background-color: #f7f7f7;
+    display: block;
+    overflow-x: scroll;
+    white-space: pre;
+
+    span.line-number {
+      color: #999;
+      padding-right: 1rem;
+    }
+
+    span.highlight {
+      background-color: yellow;
+      display: inline-block;
+      min-width: 100%;
+    }
+  }
+
+  /* user notes */
+  textarea {
+    color: #666;
+    border: 1px solid #efefef;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}
+
+
+/* match severity buttons */
+p.severity {
+  text-align: right;
+
+  a {
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    padding: 2px 10px;
+  }
+
+  a:hover {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a[data-severity=unknown] {
+    display: none;
+    color: silver;
+  }
+
+  a[data-severity=ok] {
+    color: @blue;
+    &:hover {
+      border: 1px solid @blue;
+      .fn-highlight(@blue);
+    }
+  }
+
+  a[data-severity=warn] {
+    color: @orange;
+    &:hover {
+      border: 1px solid @orange;
+      .fn-highlight(@orange);
+    }
+  }
+
+  a[data-severity=critical] {
+    color: @red;
+    &:hover {
+      border: 1px solid @red;
+      .fn-highlight(@red);
+    }
+  }
+}
+.match[data-severity=ok] p.severity a[data-severity=ok] {
+  .fn-highlight(@blue);
+  border: 1px solid @blue;
+}
+.match[data-severity=warn] p.severity a[data-severity=warn] {
+  .fn-highlight(@orange);
+  border: 1px solid @orange;
+}
+.match[data-severity=critical] p.severity a[data-severity=critical] {
+  .fn-highlight(@red);
+  border: 1px solid @red;
+}
+
+
+/* print stylesheet */
+@media print {
+
+  /* hide the navigation */
+  aside {
+    display: none;
+  }
+
+  /* go full-width */
+  main.three-fourths.column {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* hide the "show/hide" links */
+  section h2 a.show-hide {
+    display: none;
+  }
+
+  /* hide sections marked as "hidden" */
+  section[data-show='false'] {
+    display: none;
+  }
+
+  /* match style */
+  .match {
+
+    /* don't break match divs */
+    /* @BUG: this seems poorly supported in Chrome :( */
+    break-inside: avoid;
+
+    /* hide the scrollbars */
+    code {
+      -webkit-print-color-adjust: exact; 
+      overflow-x: hidden;
+    }
+
+    /* hide borders */
+    textarea {
+      border: none;
+
+      /* hide textareas that contain no notes */
+      &:placeholder-shown {
+        display: none;
+      }
+    }
+  }
+
+  /* hide the "severity" buttons */
+  .match p.severity a {
+    display: none;
+    border: none;
+  }
+
+  /* ... except for one serving as a label */
+  .match[data-severity='ok']       a[data-severity='ok'],
+  .match[data-severity='warn']     a[data-severity='warn'],
+  .match[data-severity='critical'] a[data-severity='critical'],
+  .match[data-severity='unknown']  a[data-severity='unknown'] {
+		-webkit-print-color-adjust: exact; 
+    display: inline-block;
+  }
+
+  /* DO show "ok" matches on the PDF */
+  .match[data-severity='ok'] {
+    code, textarea {
+      display: block !important; /* kludge */
+    }
+  }
+}

@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title><%= meta.project %></title>
+  <% meta.styles.external.forEach(function(url) { %>
+  <link rel='stylesheet' href='<%= url %>'>
+  <% }); %>
+  <style>
+  <%- meta.styles.embedded %>
+  </style>
+</head>
+<body class='container'>
+
+  <header class='blankslate blankslate-clean-background'>
+    <h1><%= meta.project %></h1>
+    <p class='text-gray'><%= meta.date %></p>
+  </header>
+
+  <div
+    id='app'
+    class='columns'
+    :class='{
+      nomatches    : matches.length === 0,
+      showOk       : show.ok,
+      showWarn     : show.warn,
+      showCritical : show.critical,
+      showUnknown  : show.unknown,
+    }'
+    v-cloak>
+
+    <!-- "rendering" notice -->
+    <header id='rendering' class='blankslate'>
+      <h2>Rendering...</h2>
+      Large documents may take a moment to render.
+    </header>
+
+    <header id='no-matches' class='blankslate' v-cloak>
+      <h2>No Matches</h2>
+      The scanned files match no signatures.
+    </header>
+
+    <aside class='one-fourth column'>
+    
+      <!-- filetype filter -->
+      <p class='text-gray'>Filetype:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='pair in filetypes'>
+          <a 
+            @click='filterFiletype'
+            :data-filetype='pair[0]'
+            :class='{ selected: filetype === pair[0] }'
+            class='filter-item'>
+            <span class='count'>{{ pair[1] }}</span>
+            {{ pair[0] }}
+          </a>
+        </li>
+      </ul>
+
+      <p class='text-gray'>Severity:</p>
+      <ul class='filter-list mb-5'>
+        <li v-for='severity in severities'>
+          <a
+            @click='filterSeverity'
+            :data-severity='severity'
+            class='filter-item active'>
+            {{ severity }}
+          </a>
+        </li>
+      </ul>
+
+       <!-- match navigation -->
+      <nav class='menu'>
+        <span class='menu-heading'>Matches</span>
+        <a v-once v-for='search in filteredSearches'
+          :href='"#" + search.search'
+          class='menu-item'>
+          <code>{{ search.search }}</code>
+          <span class='counter'>{{ search.count }}</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <main class='three-fourths column'>
+
+      <!-- match groups -->
+      <section v-for='group in groups' data-show='true'>
+        <a :name='group[0]'></a>
+        <h2 class='border-bottom p-3'>{{ group[0] }}
+          <a class='show-hide' @click='hideSection'>Hide</a>
+        </h2>
+
+        <!-- matches -->
+        <matches
+          v-for='match in group[1]'
+          :key='match.id'
+          :match='match'
+          v-on:annotate='save'
+          v-on:severity='save'
+        ></matches>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- match template -->
+  <template id='match'>
+    <div class='match p-3' :data-severity='match.severity'>
+      <span class='match-id text-gray'>ID: {{ match.id }}</span>
+      <p class='severity'>
+        <a data-severity='unknown'>unknown</a>
+        <a data-severity='ok'       @click='severity("ok")'>ok</a>
+        <a data-severity='warn'     @click='severity("warn")'>warn</a>
+        <a data-severity='critical' @click='severity("critical")'>critical</a>
+      </p>
+      <h3>{{ match.file }}:<span class='line-number'>{{ match.line }}</span></h3>
+      <code v-html='match.match'></code>
+      <textarea
+        placeholder='Notes'
+        v-model='match.note'
+        v-on:change='annotate()'>{{ match.note }}</textarea>
+    </div>
+  </template>
+
+  <% meta.scripts.external.forEach(function(url) { %>
+  <script type='text/javascript' src='<%= url %>'></script>
+  <% }); %>
+  <script type='text/javascript'>
+    var filetype   = '<%- filetype %>';
+    var filetypes  = <%- filetypes %>;
+    var matches    = <%- matches %>;
+    var searches   = <%- searches %>;
+    var storage    = '<%- meta.storage %>';
+    var severities = <%- severities %>;
+    <%- meta.scripts.embedded %>
+  </script>
+
+</body>
+</html>

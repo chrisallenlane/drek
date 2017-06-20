@@ -1,0 +1,8 @@
+---
+filetypes:
+  - php
+
+patterns:
+  - \s\$_GET
+  - \s\$_POST
+  - \seval\s*\(

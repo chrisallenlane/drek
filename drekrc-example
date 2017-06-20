@@ -1,0 +1,13 @@
+{
+  "dateFormat" : "D MMMM YYYY, hh:mm A",
+
+  "signatures" : [
+    "/path/to/drek-signatures/*.yml"
+  ],
+
+  "ignore"     : [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/vendor/**"
+  ]
+}
