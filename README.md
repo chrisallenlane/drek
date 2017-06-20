@@ -11,7 +11,7 @@ development anti-patterns and footguns.
 
 Much like `grep`, `drek` scans a codebase for user-defined regular-expressions.
 Unlike `grep`, `drek` outputs its results into an ergonomic `html` report that
-allows for sorting, filtering, and taking notes about points-of-interest.
+allows for sorting, filtering, and annotating of points-of-interest.
 
 `drek` is the successor to `watchtower` ([project][wt-project],
 [article][wt-article]).
@@ -41,9 +41,9 @@ the `html` report is the primary use-case.
 
 The `html` report allows auditors to do the following:
 
-- Categorize each point-of-interest with a "severity"
-- Filter points-of-interest by severity and filetype
-- Save audit notes to `localStorage`
+- Categorize each point-of-interest by "severity".
+- Filter points-of-interest by severity and filetype.
+- Save annotations to `localStorage`.
 - Export a PDF to share audit results.
 
 ### Signatures  ###
