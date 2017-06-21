@@ -1,6 +1,6 @@
 {
   "name": "drek",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A static-code-analysis tool that can be used to perform security-focused code reviews. It enables an auditor to swiftly map the attack-surface of a large application, with an emphasis on identifying development anti-patterns and footguns.",
   "homepage": "https://github.com/chrisallenlane/drek",
   "author": {

@@ -18,13 +18,13 @@ Options:
 Examples:
   
   To scan a directory and output an HTML report:
-    drek scan \
+    drek \
       --project='My App' \
       --signatures='/path/to/signatures/*.yml' \
       ./my-app > drek-scan.html
 
   To ignore code in node_modules:
-    drek scan \
+    drek \
       --project='My App' \
       --signatures='/path/to/signatures/*.yml' \
       --ignore='node_modules' \
