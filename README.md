@@ -17,6 +17,15 @@ allows for sorting, filtering, and annotating of points-of-interest.
 [article][wt-article]).
 
 
+Installing
+----------
+`drek` can be installed via `npm`:
+
+```sh
+[sudo] npm install -g drek
+```
+
+
 Example
 -------
 Scan the codebase at `/path/to/app` for the signatures contained within
