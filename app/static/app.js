@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
   // KLUDGE: this is disgusting
   var saved = localStorage.getItem(storage);
   if (saved) {
-    matches = JSON.parse(saved);
+    JSON.parse(saved).forEach(function (data, index) {
+      _.merge(matches[index], data);
+    });
   }
 
   // component for individual matches
@@ -113,10 +115,17 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
       // save match state to localStorage
       save: function () {
-        localStorage.setItem(
-          storage,
-          JSON.stringify(this.matches)
-        );
+
+        // save only the mutable match data to use localStorage efficiently
+        var data = this.matches.map(function (match) {
+          return {
+            note     : match.note,
+            severity : match.severity,
+          };
+        });
+
+        // write data to localStorage
+        localStorage.setItem(storage, JSON.stringify(data));
       }
 
     },
