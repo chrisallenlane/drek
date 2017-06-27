@@ -29,3 +29,6 @@ Examples:
       --signatures='/path/to/signatures/*.yml' \
       --ignore='node_modules' \
       ./my-app > drek-scan.html
+
+  When using wildcards with --signatures, be certain to enclose the file paths
+  within quotation marks to avoid unwanted behavior from the shell!

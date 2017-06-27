@@ -4,9 +4,9 @@ const path   = require('path');
 const test   = require('tape');
 
 
-test('util-load-signatures: it should load signature files', function (t) {
+test('util-load-signatures: it should load signatures (no wildcards)', function (t) {
   t.plan(1);
-  
+
   // stub configs
   const config = {
     signatures: [
@@ -14,14 +14,41 @@ test('util-load-signatures: it should load signature files', function (t) {
       __dirname + '/mock/signatures/php.yml',
     ],
   };
-  
+
   // expected signatures
   const expected = [
     { signature : '\\sconsole'     , filetypes : [ 'js'  ] } ,
     { signature : '\\seval\\s*\\(' , filetypes : [ 'js'  ] } ,
     { signature : '\\s\\$_GET'     , filetypes : [ 'php' ] } ,
     { signature : '\\s\\$_POST'    , filetypes : [ 'php' ] } ,
-    { signature : '\\seval\\s*\\(' , filetypes : [ 'php' ] } , 
+    { signature : '\\seval\\s*\\(' , filetypes : [ 'php' ] } ,
+  ];
+
+  // assert that the returned signatures match the expected
+  t.equals(
+    lodash.isEqual(load({}, config), expected),
+    true
+  );
+});
+
+
+test('util-load-signatures: it should load signatures (wildcards)', function (t) {
+  t.plan(1);
+  
+  // stub configs
+  const config = {
+    signatures: [
+      __dirname + '/mock/signatures/*.yml',
+    ],
+  };
+
+  // expected signatures
+  const expected = [
+    { signature : '\\sconsole'     , filetypes : [ 'js'  ] } ,
+    { signature : '\\seval\\s*\\(' , filetypes : [ 'js'  ] } ,
+    { signature : '\\s\\$_GET'     , filetypes : [ 'php' ] } ,
+    { signature : '\\s\\$_POST'    , filetypes : [ 'php' ] } ,
+    { signature : '\\seval\\s*\\(' , filetypes : [ 'php' ] } ,
   ];
 
   // assert that the returned signatures match the expected

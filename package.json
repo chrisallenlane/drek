@@ -1,6 +1,6 @@
 {
   "name": "drek",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A static-code-analysis tool that can be used to perform security-focused code reviews. It enables an auditor to swiftly map the attack-surface of a large application, with an emphasis on identifying development anti-patterns and footguns.",
   "homepage": "https://github.com/chrisallenlane/drek",
   "author": {
@@ -31,11 +31,11 @@
     "rc": "^1.2.1",
     "uuid-v4": "^0.1.0",
     "xmlbuilder": "^9.0.1",
-    "yamljs": "^0.2.10"
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
-    "jshint": "2.9.4",
+    "jshint": "2.9.5",
     "less": "^2.7.2",
     "tape": "^4.6.3"
   },
