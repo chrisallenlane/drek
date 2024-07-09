@@ -34,6 +34,9 @@ glob(globify(options, signatures), config.glob, function (err, files) {
 
   // scan each file
   files.forEach(function (file) {
+    if (fs.lstatSync(file).isDirectory()) {
+      return;
+    }
     matches = scan(file, matches, options, signatures);
   });
 
